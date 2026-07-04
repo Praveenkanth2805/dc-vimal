@@ -1,0 +1,7 @@
+import { prisma } from '@/lib/prisma';
+import ServiceManager from '@/components/Admin/ServiceManager';
+
+export default async function AdminServicesPage() {
+  const services = await prisma.service.findMany({ orderBy: { order: 'asc' } });
+  return <ServiceManager initialServices={services} />;
+}

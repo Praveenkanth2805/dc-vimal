@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-navy text-text-primary font-body;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+/* Swiper custom styles */
+.swiper-pagination-bullet {
+  background-color: #D4AF37 !important;
+}
+
+/* PhotoSwipe overrides */
+.pswp__bg {
+  background: #0B1F3A !important;
+}
