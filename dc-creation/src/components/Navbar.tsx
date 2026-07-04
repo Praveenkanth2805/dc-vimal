@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from "next/image";
 
 const links = [
   { href: '/', label: 'Home' },
@@ -32,8 +33,15 @@ export default function Navbar() {
     }`}>
       <div className="container mx-auto px-4 flex justify-between items-center h-20">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-heading text-2xl text-gold">DC Creation</span>
-        </Link>
+  <Image
+    src="/icon.png"
+    alt="DC Creation"
+    width={40}
+    height={40}
+    className="h-10 w-auto"
+  />
+  <span className="font-heading text-2xl text-gold">DC Creation</span>
+</Link>
         <div className="hidden md:flex gap-6">
           {links.map((link) => (
             <Link
