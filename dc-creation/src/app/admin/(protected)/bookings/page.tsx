@@ -3,5 +3,15 @@ import BookingManager from '@/components/Admin/BookingManager';
 
 export default async function AdminBookingsPage() {
   const bookings = await prisma.booking.findMany({ orderBy: { createdAt: 'desc' } });
-  return <BookingManager initialBookings={bookings} />;
+  return (
+  <BookingManager
+    initialBookings={bookings.map((b) => ({
+      ...b,
+      eventDate: b.eventDate.toISOString(),
+      createdAt: b.createdAt.toISOString(),
+      venue: b.venue ?? undefined,
+      message: b.message ?? undefined,
+    }))}
+  />
+);
 }

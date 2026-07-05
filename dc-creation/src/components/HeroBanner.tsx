@@ -16,15 +16,15 @@ export default function HeroBanner({
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: data?.heroImage
-            ? `url(${data.heroImage})`
-            : "none",
-        }}
-      />
+     <motion.div
+  style={{
+    y,
+    backgroundImage: data?.heroImage
+      ? `url(${data.heroImage})`
+      : "none",
+  }}
+  className="absolute inset-0 bg-cover bg-center"
+/>
       <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-navy/30" />
 
       <motion.div

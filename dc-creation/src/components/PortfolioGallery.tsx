@@ -10,7 +10,7 @@ type Image = {
   title: string;
   category: string;
   imageUrl: string;
-  thumbnailUrl?: string;
+  thumbnailUrl?: string | null;
 };
 
 export default function PortfolioGallery({

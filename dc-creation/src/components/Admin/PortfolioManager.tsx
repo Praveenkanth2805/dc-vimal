@@ -45,7 +45,7 @@ if (!file) {
   toast.error("Please select an image.");
   return;
 }
-toast.success("Image uploaded successfully.");
+
   setUploading(true);
 
   try {
@@ -65,9 +65,10 @@ toast.success("Image uploaded successfully.");
       setTitle('');
       setFile(null);
       fileInputRef.current!.value = "";
+      toast.success("Image uploaded successfully.");
     } else {
       const error = await res.json();
-      alert(error.error || 'Upload failed');
+      toast.error(error.error || "Upload failed");
     }
   } finally {
     setUploading(false);
@@ -81,14 +82,19 @@ toast.success("Image uploaded successfully.");
   setDeletingId(id);
 
   try {
-    await fetch(`/api/portfolio/${id}`, {
-      method: 'DELETE',
-    });
+  const res = await fetch(`/api/portfolio/${id}`, {
+    method: "DELETE",
+  });
 
+  if (res.ok) {
     setImages(images.filter((img) => img.id !== id));
-  } finally {
-    setDeletingId(null);
+    toast.success("Image deleted successfully.");
+  } else {
+    toast.error("Failed to delete image.");
   }
+} finally {
+  setDeletingId(null);
+}
 };
 
   const startEdit = (img: PortfolioImage) => {
@@ -124,10 +130,11 @@ toast.success("Image uploaded successfully.");
       setImages(images.map(img => (img.id === id ? updated : img)));
       setEditFile(null);
   editFileInputRef.current!.value = "";
+  toast.success("Image updated successfully.");
       cancelEdit();
     } else {
       const error = await res.json();
-      alert(error.error || 'Failed to update');
+     toast.error(error.error || "Failed to update");
     }
   } finally {
     setSavingId(null);
@@ -185,7 +192,7 @@ toast.success("Image uploaded successfully.");
 />
        <button
   onClick={handleUpload}
-  disabled={uploading || compressing || !title.trim() || !file}
+  disabled={uploading || compressing}
   className="bg-gold text-navy px-4 py-2 rounded hover:bg-gold-dark disabled:opacity-50 disabled:cursor-not-allowed"
 >
   {compressing

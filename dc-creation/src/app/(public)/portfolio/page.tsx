@@ -12,7 +12,12 @@ export default async function PortfolioPage() {
   return (
     <section className="pt-24 pb-20 container mx-auto px-4">
       <h1 className="font-heading text-4xl text-gold text-center mb-8">Our Portfolio</h1>
-      <PortfolioGallery images={images} />
+      <PortfolioGallery
+  images={images.map((img) => ({
+    ...img,
+    thumbnailUrl: img.thumbnailUrl ?? undefined,
+  }))}
+/>
     </section>
   );
 }

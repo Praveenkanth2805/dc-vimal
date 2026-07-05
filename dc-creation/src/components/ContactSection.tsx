@@ -15,7 +15,7 @@ export default async function ContactSection() {
           <p><strong>Opening Hours:</strong></p>
           <pre className="whitespace-pre-line">{info?.openingHours ? JSON.parse(info.openingHours).join('\n') : 'Mon-Sun: 9 AM - 5 PM'}</pre>
         </div>
-        <GoogleMap embedCode={info?.mapEmbed} />
+        <GoogleMap embedCode={info?.mapEmbed ?? undefined} />
       </div>
     </section>
   );

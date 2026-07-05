@@ -6,21 +6,23 @@ import cloudinary from '@/lib/cloudinary';
 // DELETE a portfolio image
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth();
+  const { id } = await params;
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  await prisma.portfolio.delete({ where: { id: params.id } });
+  await prisma.portfolio.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }
 
 // UPDATE portfolio (metadata + optionally replace image)
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await auth();
+  const { id } = await params;
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const formData = await req.formData();
@@ -72,7 +74,7 @@ export async function PATCH(
 }
 
   const updated = await prisma.portfolio.update({
-    where: { id: params.id },
+    where: { id },
     data: updateData,
   });
 

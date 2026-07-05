@@ -18,7 +18,7 @@ export default function LoadingScreen() {
           transition={{ duration: 0.8 }}
         >
           <div className="relative">
-            <Image src="/logo.svg" alt="DC Creation" width={120} height={120} className="mb-6" />
+            <Image src="/icon.png" alt="DC Creation" width={120} height={120} className="mb-6" />
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
                 className="w-28 h-28 border-4 border-gold border-t-transparent rounded-full"
