@@ -22,7 +22,7 @@ export default function HomePageClient({
       <AnimatedHeroSection data={content?.hero} />
       <AboutSection data={content?.about} />
       <WhyChooseUs points={content?.whyChooseUs} />
-      <ServicesSection />
+      {/* <ServicesSection /> */}
       <PortfolioGallery images={portfolioImages} limit={8} />
       <VideoShowcase />
       <ReviewsCarousel />

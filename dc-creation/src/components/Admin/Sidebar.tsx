@@ -8,7 +8,7 @@ const links = [
   { href: '/admin', icon: FaTachometerAlt, label: 'Dashboard' },
   { href: '/admin/portfolio', icon: FaImages, label: 'Portfolio' },
   { href: '/admin/videos', icon: FaVideo, label: 'Videos' },
-  { href: '/admin/services', icon: FaConciergeBell, label: 'Services' },
+  //{ href: '/admin/services', icon: FaConciergeBell, label: 'Services' },
   { href: '/admin/reviews', icon: FaStar, label: 'Reviews' },
   { href: '/admin/bookings', icon: FaCalendarAlt, label: 'Bookings' },
   { href: '/admin/pricing', icon: FaDollarSign, label: 'Pricing' },
