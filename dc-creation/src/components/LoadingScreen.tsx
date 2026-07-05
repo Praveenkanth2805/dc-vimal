@@ -17,16 +17,22 @@ export default function LoadingScreen() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative">
-            <Image src="/icon.png" alt="DC Creation" width={120} height={120} className="mb-6" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                className="w-28 h-28 border-4 border-gold border-t-transparent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-              />
-            </div>
-          </div>
+          <div className="relative w-[80px] h-[8  0px] flex items-center justify-center">
+  
+  <Image
+    src="/icon.png"
+    alt="DC Creation"
+    width={80}
+    height={80}
+    className="z-10"
+  />
+
+  <motion.div
+    className="absolute w-[95px] h-[95px] rounded-full border-4 border-gold border-t-transparent"
+    animate={{ rotate: 360 }}
+    transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+  />
+</div>
         </motion.div>
       )}
     </AnimatePresence>
