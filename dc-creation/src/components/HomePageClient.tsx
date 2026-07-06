@@ -27,7 +27,7 @@ export default function HomePageClient({
       <PortfolioGallery images={portfolioImages} limit={8} />
       <VideoShowcase />
       <ReviewsCarousel />
-      <StatsSection />
+      <StatsSection data={content?.stats} />
       <BookingCTA />
       <ContactSection />
       <ReviewForm />

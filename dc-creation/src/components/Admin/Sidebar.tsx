@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaTachometerAlt, FaImages, FaVideo, FaConciergeBell, FaStar, FaCalendarAlt, FaDollarSign, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'next-auth/react';
+import { FaHome } from 'react-icons/fa';
 
 const links = [
   { href: '/admin', icon: FaTachometerAlt, label: 'Dashboard' },
@@ -12,6 +13,7 @@ const links = [
   { href: '/admin/reviews', icon: FaStar, label: 'Reviews' },
   { href: '/admin/bookings', icon: FaCalendarAlt, label: 'Bookings' },
   { href: '/admin/pricing', icon: FaDollarSign, label: 'Pricing' },
+  { href: '/admin/homepage', icon: FaHome, label: 'Homepage' }, 
   { href: '/admin/settings', icon: FaCog, label: 'Settings' },
 ];
 

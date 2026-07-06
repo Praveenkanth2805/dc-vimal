@@ -2,7 +2,12 @@ import { prisma } from './prisma';
 
 export async function getHomepageContent() {
   const content = await prisma.homepageContent.findFirst();
-  return content;
+  if (!content) return null;
+  return {
+    ...content,
+    whyChooseUs: content.whyChooseUs ? JSON.parse(content.whyChooseUs) : [],
+    stats: content.stats ? JSON.parse(content.stats) : [],
+  };
 }
 
 export async function getContactInfo() {

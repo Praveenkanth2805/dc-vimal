@@ -39,7 +39,7 @@ export default function BookingManager({ initialBookings }: { initialBookings: B
       fullName: b.fullName,
       mobile: b.mobile,
       eventType: b.eventType,
-      eventDate: b.eventDate.slice(0, 10), // date string
+      eventDate: b.eventDate.slice(0, 10),
       venue: b.venue || '',
       message: b.message || '',
       contacted: b.contacted,
@@ -69,15 +69,35 @@ export default function BookingManager({ initialBookings }: { initialBookings: B
   const whatsappLink = (b: Booking) =>
     `https://wa.me/91${b.mobile}?text=${encodeURIComponent(`Hello ${b.fullName},\nRegarding your ${b.eventType} enquiry on ${new Date(b.eventDate).toLocaleDateString()}.`)}`;
 
+  // --- NEW: Export function ---
+  const handleExport = () => {
+    const url = search
+      ? `/api/bookings/export?search=${encodeURIComponent(search)}`
+      : '/api/bookings/export';
+    window.open(url, '_blank');
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-heading text-gold mb-4">Bookings</h2>
-      <input
-        placeholder="Search by name or mobile"
-        className="mb-4 w-full bg-navy border border-border p-2 rounded text-text-primary"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
+
+      {/* Search + Export row */}
+      <div className="flex gap-4 mb-4 flex-wrap items-center">
+        <input
+          placeholder="Search by name or mobile"
+          className="flex-1 bg-navy border border-border p-2 rounded text-text-primary"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <button
+          onClick={handleExport}
+          className="bg-green-700 text-white px-5 py-2 rounded hover:bg-green-800 transition flex items-center gap-2"
+        >
+          📥 Export to Excel
+        </button>
+      </div>
+
+      {/* Bookings list – unchanged */}
       <div className="space-y-4">
         {filtered.map(b => (
           <div key={b.id} className={`bg-navy-light border ${b.contacted ? 'border-green-500/50' : 'border-border'} p-4 rounded-lg`}>

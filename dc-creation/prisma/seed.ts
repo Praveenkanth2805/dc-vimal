@@ -11,6 +11,7 @@ async function main() {
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
+  // Admin user
   await prisma.user.upsert({
     where: { email: adminEmail },
     update: {},
@@ -21,6 +22,7 @@ async function main() {
     },
   });
 
+  // Homepage content (only one upsert, with stats)
   await prisma.homepageContent.upsert({
     where: { id: 1 },
     update: {},
@@ -36,27 +38,25 @@ async function main() {
         'Online & On-site Services',
         'Appointment-Based Personalized Service',
       ]),
+      stats: JSON.stringify([
+        { label: 'Happy Clients', value: 150 },
+        { label: 'Projects Done', value: 320 },
+        { label: 'Awards Won', value: 12 },
+        { label: 'Years Experience', value: 5 },
+      ]),
     },
   });
 
+  // Portfolio (skipDuplicates to avoid errors on re-seed)
   await prisma.portfolio.createMany({
     data: [
-      {
-        title: 'Wedding Bliss',
-        category: 'Wedding',
-        imageUrl: '/placeholder-wedding.jpg',
-        order: 1,
-      },
-      {
-        title: 'Candid Laughter',
-        category: 'Candid',
-        imageUrl: '/placeholder-candid.jpg',
-        order: 2,
-      },
+      { title: 'Wedding Bliss', category: 'Wedding', imageUrl: '/placeholder-wedding.jpg', order: 1 },
+      { title: 'Candid Laughter', category: 'Candid', imageUrl: '/placeholder-candid.jpg', order: 2 },
     ],
-    //skipDuplicates: true,
+   // skipDuplicates: true,
   });
 
+  // Photo frame prices
   const prices = [
     { size: '6x4', type: 'Standard', price: 120 },
     { size: '8x6', type: 'Standard', price: 230 },
@@ -76,15 +76,14 @@ async function main() {
   ];
 
   for (const p of prices) {
-    await prisma.photoFramePrice.create({
-      data: p,
-    });
+    await prisma.photoFramePrice.create({ data: p });
   }
-    console.log(`
+
+  console.log(`
 ====================================
 ✅ Database Seed Completed Successfully
 👤 Admin User Created/Updated
-🏠 Homepage Content Seeded
+🏠 Homepage Content Seeded (with statistics)
 🖼️ Portfolio Seeded
 🖼️ Photo Frame Prices Seeded
 ====================================

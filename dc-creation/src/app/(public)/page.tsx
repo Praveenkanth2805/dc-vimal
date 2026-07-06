@@ -16,12 +16,15 @@ export default async function Home() {
 
   return (
     <HomePageClient
-      content={{
-        hero: heroData,
+       content={{
+        hero: content ? {
+          heroTitle: content.heroTitle ?? undefined,
+          heroSubtitle: content.heroSubtitle ?? undefined,
+          heroImage: content.heroImage ?? undefined,
+        } : undefined,
         about: content?.aboutText ?? undefined,
-        whyChooseUs: content?.whyChooseUs
-          ? JSON.parse(content.whyChooseUs)
-          : [],
+        whyChooseUs: content?.whyChooseUs ?? [],
+        stats: content?.stats ?? [],
       }}
       portfolioImages={portfolioImages}
     />

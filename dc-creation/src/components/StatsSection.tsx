@@ -2,14 +2,16 @@
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 
-const stats = [
-  { label: 'Happy Clients', value: 150 },
-  { label: 'Projects Done', value: 320 },
-  { label: 'Awards Won', value: 12 },
-  { label: 'Years Experience', value: 5 },
-];
+type Stat = { label: string; value: number };
 
-export default function StatsSection() {
+export default function StatsSection({ data }: { data?: Stat[] }) {
+  const stats = data && data.length > 0 ? data : [
+    { label: 'Happy Clients', value: 150 },
+    { label: 'Projects Done', value: 320 },
+    { label: 'Awards Won', value: 12 },
+    { label: 'Years Experience', value: 5 },
+  ];
+
   return (
     <section className="py-16 bg-navy">
       <div className="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
