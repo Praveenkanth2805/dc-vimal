@@ -47,8 +47,9 @@ export default function Navbar() {
     height={40}
     className="h-10 w-auto"
   />
- <span className={`${cinzel.className} text-2xl text-gold`}>
-  DC Creation
+ <span className={`${cinzel.className} text-2xl`}>
+  <span className="text-red-600">DC</span>{" "}
+  <span className="text-white">Creation</span>
 </span>
 </Link>
         <div className="hidden md:flex gap-6">
