@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
+import { useLoading } from "@/lib/loading-context";
 import HeroBanner from "./HeroBanner";
 
 export default function AnimatedHeroSection({
@@ -13,20 +14,24 @@ export default function AnimatedHeroSection({
   const [key, setKey] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false });
+  const { isLoading } = useLoading();
 
-  // Increment key every time the hero comes back into view
+  // Increment key when hero comes into view (scroll up)
   useEffect(() => {
     if (isInView) {
       setKey((prev) => prev + 1);
     }
   }, [isInView]);
 
-  // Also remount when navigating to "/" from another page
+  // Increment key when navigating to "/" (client navigation)
   useEffect(() => {
     if (pathname === "/") {
       setKey((prev) => prev + 1);
     }
   }, [pathname]);
+
+  // Don't render the hero until loading screen is done
+  if (isLoading) return null;
 
   return (
     <div ref={sectionRef}>

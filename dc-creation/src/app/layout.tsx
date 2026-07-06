@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
+import { LoadingProvider } from "@/lib/loading-context";
 import { Toaster } from "sonner";
 
 const playfair = Playfair_Display({
@@ -35,19 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${playfair.variable} ${poppins.variable}`}
-    >
+    <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
       <body>
-        <LoadingScreen />
-        {children}
-         <Toaster
-    position="top-right"
-    richColors
-    closeButton
-    duration={3000}
-  />
+        <LoadingProvider>
+          <LoadingScreen />
+          {children}
+          <Toaster position="top-right" richColors closeButton duration={3000} />
+        </LoadingProvider>
       </body>
     </html>
   );

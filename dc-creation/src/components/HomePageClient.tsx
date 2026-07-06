@@ -9,6 +9,7 @@ import ReviewsCarousel from "./ReviewsCarousel";
 import StatsSection from "./StatsSection";
 import BookingCTA from "./BookingCTA";
 import ContactSection from "./ContactSection";
+import ReviewForm from "./ReviewForm";
 
 export default function HomePageClient({
   content,
@@ -29,6 +30,7 @@ export default function HomePageClient({
       <StatsSection />
       <BookingCTA />
       <ContactSection />
+      <ReviewForm />
     </>
   );
 }

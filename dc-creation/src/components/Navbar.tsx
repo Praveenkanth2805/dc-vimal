@@ -5,6 +5,12 @@ import { usePathname } from 'next/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/image";
+import { Cinzel } from "next/font/google";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
 
 const links = [
   { href: '/', label: 'Home' },
@@ -41,7 +47,9 @@ export default function Navbar() {
     height={40}
     className="h-10 w-auto"
   />
-  <span className="font-heading text-2xl text-gold">DC Creation</span>
+ <span className={`${cinzel.className} text-2xl text-gold`}>
+  DC Creation
+</span>
 </Link>
         <div className="hidden md:flex gap-6">
           {links.map((link) => (

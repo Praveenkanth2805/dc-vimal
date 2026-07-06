@@ -1,6 +1,8 @@
 import { getAllReviews } from '@/lib/data';
 import { FaStar } from 'react-icons/fa';
 import { Metadata } from 'next';
+import ReviewForm from '@/components/ReviewForm';
+
 
 export const metadata: Metadata = {
   title: 'Reviews',
@@ -25,6 +27,9 @@ export default async function ReviewsPage() {
           </div>
         ))}
       </div>
+       <div className="mt-16">
+      <ReviewForm />
+    </div>
     </section>
   );
 }
