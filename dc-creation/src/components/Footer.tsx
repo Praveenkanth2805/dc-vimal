@@ -1,7 +1,16 @@
 import Link from 'next/link';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
+import { prisma } from "@/lib/prisma";
 
-export default function Footer() {
+
+export default async function Footer() {
+
+   const contactInfo = await prisma.contactInfo.findFirst();
+
+  const social = contactInfo?.socialLinks
+    ? JSON.parse(contactInfo.socialLinks)   
+    : {};
+
   return (
     <footer className="bg-navy-light border-t border-border pt-16 pb-8">
       <div className="container mx-auto px-4 grid md:grid-cols-3 gap-8">
@@ -24,9 +33,32 @@ export default function Footer() {
         <div>
           <h4 className="font-heading text-xl text-gold mb-4">Follow Us</h4>
           <div className="flex gap-4 text-2xl text-text-secondary">
-            <a href="#" className="hover:text-gold"><FaInstagram /></a>
-            <a href="#" className="hover:text-gold"><FaFacebook /></a>
-            <a href="#" className="hover:text-gold"><FaYoutube /></a>
+            <a
+      href={social.instagram || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-gold"
+    >
+      <FaInstagram />
+    </a>
+
+    <a
+      href={social.facebook || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-gold"
+    >
+      <FaFacebook />
+    </a>
+
+    <a
+      href={social.youtube || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-gold"
+    >
+      <FaYoutube />
+    </a>
           </div>
           <div className="mt-4 text-text-secondary text-sm">
             <p>Kodi Street, V. Maruthur, Villupuram, Tamil Nadu - 605602</p>
