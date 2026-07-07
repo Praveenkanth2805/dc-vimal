@@ -7,13 +7,13 @@ import { FaHome } from 'react-icons/fa';
 
 const links = [
   { href: '/admin', icon: FaTachometerAlt, label: 'Dashboard' },
+  { href: '/admin/homepage', icon: FaHome, label: 'Homepage' },
   { href: '/admin/portfolio', icon: FaImages, label: 'Portfolio' },
   { href: '/admin/videos', icon: FaVideo, label: 'Videos' },
   //{ href: '/admin/services', icon: FaConciergeBell, label: 'Services' },
   { href: '/admin/reviews', icon: FaStar, label: 'Reviews' },
   { href: '/admin/bookings', icon: FaCalendarAlt, label: 'Bookings' },
-  { href: '/admin/pricing', icon: FaDollarSign, label: 'Pricing' },
-  { href: '/admin/homepage', icon: FaHome, label: 'Homepage' }, 
+  { href: '/admin/pricing', icon: FaDollarSign, label: 'Pricing' }, 
   { href: '/admin/settings', icon: FaCog, label: 'Settings' },
 ];
 

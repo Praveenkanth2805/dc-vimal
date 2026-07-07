@@ -53,7 +53,7 @@ async function main() {
       { title: 'Wedding Bliss', category: 'Wedding', imageUrl: '/placeholder-wedding.jpg', order: 1 },
       { title: 'Candid Laughter', category: 'Candid', imageUrl: '/placeholder-candid.jpg', order: 2 },
     ],
-   // skipDuplicates: true,
+   skipDuplicates: true,
   });
 
   // Photo frame prices

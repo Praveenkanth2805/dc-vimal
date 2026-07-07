@@ -5,11 +5,16 @@ import { usePathname } from 'next/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/image";
-import { Cinzel } from "next/font/google";
+import { Cinzel, Great_Vibes } from "next/font/google";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["700"],
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const links = [
@@ -47,9 +52,34 @@ export default function Navbar() {
     height={40}
     className="h-10 w-auto"
   />
- <span className={`${cinzel.className} text-2xl`}>
-  <span className="text-red-600">DC</span>{" "}
-  <span className="text-white">Creation</span>
+<span className="text-2xl flex items-end">
+  <span
+    className={`${cinzel.className} text-white text-4xl tracking-[-0.48em]`}
+    style={{
+      textShadow: `
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000
+      `,
+    }}
+  >
+    DC
+  </span>
+
+  <span
+    className={`${greatVibes.className} text-gold text-xl ml-5`}
+    style={{
+      textShadow: `
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000
+      `,
+    }}
+  >
+    Creation
+  </span>
 </span>
 </Link>
         <div className="hidden md:flex gap-6">
