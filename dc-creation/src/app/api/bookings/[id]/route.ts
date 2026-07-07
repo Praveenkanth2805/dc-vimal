@@ -30,12 +30,18 @@ export async function PATCH(
   }
 
   const body = await req.json();
-  const { id } = await params;
 
-  await prisma.booking.update({
-    where: { id },
-    data: body,
-  });
+const { id } = await params;
 
-  return NextResponse.json({ success: true });
+const updatedBooking = await prisma.booking.update({
+  where: { id },
+  data: {
+    ...body,
+    eventDate: body.eventDate
+      ? new Date(body.eventDate)
+      : undefined,
+  },
+});
+
+return NextResponse.json(updatedBooking);
 }

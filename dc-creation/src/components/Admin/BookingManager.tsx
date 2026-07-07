@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { toast } from "sonner";
 
 type Booking = {
   id: string;
@@ -20,18 +21,41 @@ export default function BookingManager({ initialBookings }: { initialBookings: B
   const [editForm, setEditForm] = useState<Partial<Booking>>({});
 
   const markContacted = async (id: string) => {
-    await fetch(`/api/bookings/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ contacted: true }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    setBookings(bookings.map(b => b.id === id ? { ...b, contacted: true } : b));
-  };
+  const res = await fetch(`/api/bookings/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ contacted: true }),
+  });
+
+  if (res.ok) {
+    setBookings(prev =>
+      prev.map(b =>
+        b.id === id
+          ? { ...b, contacted: true }
+          : b
+      )
+    );
+
+    toast.success("Booking marked as contacted.");
+  } else {
+    toast.error("Failed to update booking.");
+  }
+};
 
   const deleteBooking = async (id: string) => {
-    await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+  const res = await fetch(`/api/bookings/${id}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
     setBookings(bookings.filter(b => b.id !== id));
-  };
+    toast.success("Booking deleted successfully.");
+  } else {
+    toast.error("Failed to delete booking.");
+  }
+};
 
   const startEdit = (b: Booking) => {
     setEditId(b.id);
@@ -49,33 +73,42 @@ export default function BookingManager({ initialBookings }: { initialBookings: B
   const cancelEdit = () => setEditId(null);
 
   const saveEdit = async (id: string) => {
-    const res = await fetch(`/api/bookings/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editForm),
-    });
-    if (res.ok) {
-      const updated = await res.json();
-      setBookings(bookings.map(b => b.id === id ? updated : b));
-      cancelEdit();
-    }
-  };
+  const res = await fetch(`/api/bookings/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(editForm),
+  });
 
-  const filtered = bookings.filter(b =>
-    b.fullName.toLowerCase().includes(search.toLowerCase()) ||
-    b.mobile.includes(search)
-  );
+  if (res.ok) {
+    const updated = await res.json();
+    setBookings(bookings.map(b => b.id === id ? updated : b));
+    cancelEdit();
+    toast.success("Booking updated successfully.");
+  } else {
+    toast.error("Failed to update booking.");
+  }
+};
+
+  const filtered = bookings.filter(
+  b =>
+    (b.fullName ?? "")
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    (b.mobile ?? "").includes(search)
+);
 
   const whatsappLink = (b: Booking) =>
     `https://wa.me/91${b.mobile}?text=${encodeURIComponent(`Hello ${b.fullName},\nRegarding your ${b.eventType} enquiry on ${new Date(b.eventDate).toLocaleDateString()}.`)}`;
 
   // --- NEW: Export function ---
   const handleExport = () => {
-    const url = search
-      ? `/api/bookings/export?search=${encodeURIComponent(search)}`
-      : '/api/bookings/export';
-    window.open(url, '_blank');
-  };
+  const url = search
+    ? `/api/bookings/export?search=${encodeURIComponent(search)}`
+    : "/api/bookings/export";
+
+  window.open(url, "_blank");
+  toast.success("Excel export started.");
+};
 
   return (
     <div>
