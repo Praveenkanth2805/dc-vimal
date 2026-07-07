@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner'; 
 
 type ContactInfo = {
   address?: string;
@@ -21,7 +22,13 @@ export default function SettingsForm({ initialData }: { initialData: ContactInfo
     openingHours: '["Mon-Sun: 09:00 AM - 05:00 PM"]',
     socialLinks: '{"instagram":"#","facebook":"#","youtube":"#"}',
   });
-  const [saved, setSaved] = useState(false);
+  
+  const [loading, setLoading] = useState(false);
+  const [social, setSocial] = useState({
+  instagram: '',
+  facebook: '',
+  youtube: '',
+});
 
   useEffect(() => {
     if (initialData) {
@@ -35,22 +42,67 @@ export default function SettingsForm({ initialData }: { initialData: ContactInfo
         socialLinks: initialData.socialLinks || '{}',
       });
     }
+    if (initialData?.socialLinks) {
+  try {
+    setSocial(JSON.parse(initialData.socialLinks));
+  } catch {
+    setSocial({
+      instagram: '',
+      facebook: '',
+      youtube: '',
+    });
+  }
+}
   }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleSocialChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  setSocial({
+    ...social,
+    [e.target.name]: e.target.value,
+  });
+};
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const res = await fetch('/api/contact-info', {
-      method: 'PUT',
-      body: JSON.stringify(form),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (res.ok) setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
+  e.preventDefault();
+
+  setLoading(true);
+
+  const payload = {
+  ...form,
+  socialLinks: JSON.stringify(social),
+};
+
+const promise = fetch('/api/contact-info', {
+  method: 'PUT',
+  body: JSON.stringify(payload),
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}).then(async (res) => {
+  if (!res.ok) {
+    throw new Error('Failed');
+  }
+  return res;
+});
+
+  toast.promise(promise, {
+    loading: 'Saving settings...',
+    success: 'Settings saved successfully!',
+    error: 'Failed to save settings.',
+  });
+
+  try {
+   await promise;
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div>
@@ -62,11 +114,37 @@ export default function SettingsForm({ initialData }: { initialData: ContactInfo
         <input name="email" type="email" placeholder="Email" className="w-full bg-navy border border-border p-2 rounded text-text-primary" value={form.email} onChange={handleChange} />
         <textarea name="mapEmbed" placeholder="Google Maps embed code" rows={3} className="w-full bg-navy border border-border p-2 rounded text-text-primary" value={form.mapEmbed} onChange={handleChange} />
         <textarea name="openingHours" placeholder='JSON array of hours, e.g., ["Mon-Fri: 9-5"]' rows={2} className="w-full bg-navy border border-border p-2 rounded text-text-primary" value={form.openingHours} onChange={handleChange} />
-        <textarea name="socialLinks" placeholder='JSON object of social links' rows={2} className="w-full bg-navy border border-border p-2 rounded text-text-primary" value={form.socialLinks} onChange={handleChange} />
-        <button type="submit" className="bg-gold text-navy px-6 py-2 rounded font-semibold hover:bg-gold-dark transition">
-          Save Settings
-        </button>
-        {saved && <span className="text-green-500 ml-4">Saved!</span>}
+        <input
+  name="instagram"
+  placeholder="Instagram URL"
+  className="w-full bg-navy border border-border p-2 rounded text-text-primary"
+  value={social.instagram}
+  onChange={handleSocialChange}
+/>
+
+<input
+  name="facebook"
+  placeholder="Facebook URL"
+  className="w-full bg-navy border border-border p-2 rounded text-text-primary"
+  value={social.facebook}
+  onChange={handleSocialChange}
+/>
+
+<input
+  name="youtube"
+  placeholder="YouTube URL"
+  className="w-full bg-navy border border-border p-2 rounded text-text-primary"
+  value={social.youtube}
+  onChange={handleSocialChange}
+/>
+        <button
+  type="submit"
+  disabled={loading}
+  className="bg-gold text-navy px-6 py-2 rounded font-semibold hover:bg-gold-dark transition disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {loading ? 'Saving...' : 'Save Settings'}
+</button>
+        
       </form>
     </div>
   );
