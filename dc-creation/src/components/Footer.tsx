@@ -1,16 +1,31 @@
-export const dynamic = "force-dynamic";
+"use client";
+import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
-import { prisma } from "@/lib/prisma";
 
+export default function Footer() {
 
-export default async function Footer() {
+   const [social, setSocial] = useState<{
+    instagram?: string;
+    facebook?: string;
+    youtube?: string;
+  }>({});
 
-   const contactInfo = await prisma.contactInfo.findFirst();
+useEffect(() => {
+  fetch("/api/contact-info")
+    .then((res) => res.json())
+    .then((data) => {
+      setSocial(data.socialLinks ? JSON.parse(data.socialLinks) : {});
+    });
+}, []);
+const [contactInfo, setContactInfo] = useState<any>(null);
 
-  const social = contactInfo?.socialLinks
-    ? JSON.parse(contactInfo.socialLinks)   
-    : {};
+useEffect(() => {
+  fetch("/api/contact-info")
+    .then((res) => res.json())
+    .then(setContactInfo);
+}, []);
+
 const links = [
   { label: "About", href: "/about" },
   { label: "Portfolio", href: "/portfolio" },
@@ -73,8 +88,8 @@ const links = [
     </a>
           </div>
           <div className="mt-4 text-text-secondary text-sm">
-            <p>Kodi Street, V. Maruthur, Villupuram, Tamil Nadu - 605602</p>
-            <p>Phone: 072003 04753</p>
+            <p>{contactInfo?.address}</p>
+<p>{contactInfo?.phone}</p>
           </div>
         </div>
       </div>
