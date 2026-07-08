@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { prisma } from '@/lib/prisma';
 import ReviewManager from '@/components/Admin/ReviewManager';
 

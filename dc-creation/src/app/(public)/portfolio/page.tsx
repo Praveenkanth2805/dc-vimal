@@ -17,6 +17,7 @@ export default async function PortfolioPage() {
     ...img,
     thumbnailUrl: img.thumbnailUrl ?? undefined,
   }))}
+   showTitle={false} 
 />
     </section>
   );

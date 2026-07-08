@@ -16,9 +16,11 @@ type Image = {
 export default function PortfolioGallery({
   images,
   limit,
+  showTitle = true,
 }: {
   images: Image[];
   limit?: number;
+  showTitle?: boolean;
 }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const categories = [
@@ -47,14 +49,16 @@ export default function PortfolioGallery({
 
   return (
     <section className="py-20 container mx-auto px-4" id="gallery">
-      {/* <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="font-heading text-4xl md:text-5xl text-gold text-center mb-8"
-      >
-        Our Portfolio
-      </motion.h2> */}
+      {showTitle && (
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-heading text-4xl md:text-5xl text-gold text-center mb-8"
+        >
+          Our Portfolio
+        </motion.h2>
+      )}
 
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {categories.map((cat) => (

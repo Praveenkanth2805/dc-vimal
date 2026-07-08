@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from 'next/link';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
 import { prisma } from "@/lib/prisma";
