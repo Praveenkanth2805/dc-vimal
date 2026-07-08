@@ -11,6 +11,14 @@ export default async function Footer() {
   const social = contactInfo?.socialLinks
     ? JSON.parse(contactInfo.socialLinks)   
     : {};
+const links = [
+  { label: "About", href: "/about" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Videos", href: "/video-gallery" },
+  { label: "Pricing", href: "/photo-frame-pricing" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Contact", href: "/contact" },
+];
 
   return (
     <footer className="bg-navy-light border-t border-border pt-16 pb-8">
@@ -22,14 +30,17 @@ export default async function Footer() {
         <div>
           <h4 className="font-heading text-xl text-gold mb-4">Quick Links</h4>
           <ul className="space-y-2">
-            {['About','Portfolio','Videos','Pricing','Reviews','Contact'].map((item) => (
-              <li key={item}>
-                <Link href={`/${item.toLowerCase()}`} className="text-text-secondary hover:text-gold transition">
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
+  {links.map((item) => (
+    <li key={item.href}>
+      <Link
+        href={item.href}
+        className="text-text-secondary hover:text-gold transition"
+      >
+        {item.label}
+      </Link>
+    </li>
+  ))}
+</ul>
         </div>
         <div>
           <h4 className="font-heading text-xl text-gold mb-4">Follow Us</h4>
